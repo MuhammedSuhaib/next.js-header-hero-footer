@@ -1,0 +1,72 @@
+.ul {
+  display: flex;
+  padding: 0;
+  background-color: midnightblue;
+  border-radius: 50px;
+  /* Rounded corners */
+  color: black;
+  padding-inline-start: 30%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 20px;
+  list-style: none;
+  justify-content: space-between; /* Space items evenly */
+
+}
+
+.ul li {
+  margin: 0 10px;
+  /* Horizontal spacing */
+  padding: 10px 20px;
+  /* Internal spacing */
+}
+
+.li {
+  color: white;
+}
+
+.btn1,
+.btn2 {
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  /* Optional: remove border for a cleaner look */
+}
+
+.btn1 {
+  background-color: #7851a9;
+  margin-left: auto;
+  /* Pushes this button to the far right */
+}
+
+.btn2 {
+  background-color: #ec4d9c;
+  margin-left: 10px;
+  /* Space between buttons */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .ul {
+    flex-direction: column;
+    /* Stack items vertically */
+    padding-inline-start: 0;
+    /* Remove left padding */
+  }
+
+  .ul li {
+    margin: 10px 0;
+    /* Space between items */
+    padding: 10px;
+    /* Adjust padding for smaller screens */
+  }
+
+  .btn1,
+  .btn2 {
+    width: 100%;
+    /* Full width buttons on smaller screens */
+    margin: 5px 0;
+    /* Space between buttons */
+  }
+}

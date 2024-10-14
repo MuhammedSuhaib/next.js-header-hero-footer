@@ -1,0 +1,46 @@
+.hero {
+  /* display: flex; */
+  flex-direction: column; /* Stack items vertically */
+    background: #f4f4f4;
+    padding: 60px 20px;
+    text-align: center;
+    color: black;
+  }
+  
+  .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .heroButton {
+    background-color: #0070f3;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+ 
+  /* Responsive Styles */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 10px; /* Less padding on smaller screens */
+  }
+
+  .hero h2 {
+    font-size: 2rem; /* Adjust heading size */
+  }
+
+  .hero p {
+    font-size: 1rem; /* Adjust paragraph size */
+  }
+
+  .heroButton {
+    width: 100%; /* Full width button on smaller screens */
+    padding: 15px; /* Larger padding for easier clicking */
+  }
+}
