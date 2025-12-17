@@ -1,31 +1,26 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { auth } from './lib/auth'
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
-  title: "Components ",
-  description: "Hearder,Hero,Footer",
+  title: "Components",
+  description: "Header, Hero, Footer",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  // const session = await auth.api.getSession({
+  //   headers: headers(),
+  // });
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         {children}
       </body>
     </html>
