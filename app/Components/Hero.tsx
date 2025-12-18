@@ -1,5 +1,6 @@
 import React from "react";
 import style from "../hero.module.css";
+import Link from "next/link";
 
 function HeroPage() {
   return (
@@ -13,8 +14,10 @@ function HeroPage() {
           “Don’t press the button below; it does absolutely nothing! But if you
           do, just remember: the button’s feelings might be hurt!”
         </p>
+      <Link href="/Signup" className={style.heroButton}>
+        Get Started
+      </Link>
 
-        <button className={style.heroButton}>Get Started</button>
       </section>
     </>
   );
