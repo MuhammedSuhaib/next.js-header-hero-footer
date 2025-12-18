@@ -8,3 +8,23 @@ export const auth = betterAuth({
         connectionString: process.env.DATABASE_URL,
     }),
 });
+
+// 👇 ADD ONLY THIS
+    const handler = auth.handler;
+
+    export const withCors = async (req: Request) => {
+    const res = await handler(req);
+    res.headers.set(
+        "Access-Control-Allow-Origin",
+        "https://muhammedsuhaib.github.io"
+    );
+    res.headers.set(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+    );
+    res.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET, POST, OPTIONS"
+    );
+    return res;
+    };

@@ -1,5 +1,16 @@
-import { auth } from './../../../lib/auth';
+import { withCors } from "./../../../lib/auth";
 // export const runtime = "nodejs"; // IMPORTANT
 
-export const GET = auth.handler;
-export const POST = auth.handler;
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "https://muhammedsuhaib.github.io",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    },
+  });
+}
+
+export const GET = withCors;
+export const POST = withCors;
