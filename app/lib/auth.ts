@@ -26,5 +26,9 @@ export const auth = betterAuth({
         "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS"
     );
+    res.headers.set(
+    "Access-Control-Allow-Credentials",
+    "true"
+    );
     return res;
     };
