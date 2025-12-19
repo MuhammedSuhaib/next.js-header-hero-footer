@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { Pool } from "pg";
+const isProd = process.env.NODE_ENV === "production";
 
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET!,
@@ -10,7 +11,7 @@ export const auth = betterAuth({
   cookies: {
     sameSite: "none",
     secure: true,
-    domain: "localhost", // dev only
+    ...(isProd ? {} : { domain: "localhost" }),
   },
 });
 

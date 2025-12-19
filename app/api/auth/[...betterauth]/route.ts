@@ -4,4 +4,6 @@ const handler = auth.handler;
 
 export const GET = withCors(handler);
 export const POST = withCors(handler);
-export const OPTIONS = withCors(handler);
+export const OPTIONS = withCors(async () => {
+    return new Response(null, { status: 204 });
+});
