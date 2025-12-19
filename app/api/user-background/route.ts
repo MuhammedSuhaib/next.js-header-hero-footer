@@ -1,22 +1,19 @@
 import { pool } from "./../../lib/db";
-import { auth } from "./../../lib/auth";
 
     export async function POST(req: Request) {
-    const session = await auth.api.getSession({ headers: req.headers });
+    const { username, software, hardware, goal } = await req.json();
 
-    if (!session) {
-        return new Response("Unauthorized", { status: 401 });
+    if (!username || !software || !hardware || !goal) {
+        return new Response("Bad request", { status: 400 });
     }
 
-    const { userId, data } = await req.json();
-
-    for (const item of data) {
-        await pool.query(
-        `INSERT INTO user_background (user_id, question, answer)
-        VALUES ($1, $2, $3)`,
-        [userId, item.q, item.a]
-        );
-    }
+    await pool.query(
+        `INSERT INTO user_background (username, software, hardware, goal)
+        VALUES ($1, $2, $3, $4)
+        ON CONFLICT (username)
+        DO UPDATE SET software=$2, hardware=$3, goal=$4`,
+        [username, software, hardware, goal]
+    );
 
     return Response.json({ ok: true });
     }
