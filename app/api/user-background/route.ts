@@ -8,13 +8,13 @@ import { auth } from "./../../lib/auth";
         return new Response("Unauthorized", { status: 401 });
     }
 
-    const { data } = await req.json();
+    const { userId, data } = await req.json();
 
     for (const item of data) {
         await pool.query(
         `INSERT INTO user_background (user_id, question, answer)
         VALUES ($1, $2, $3)`,
-        [session.user.id, item.q, item.a]
+        [userId, item.q, item.a]
         );
     }
 
