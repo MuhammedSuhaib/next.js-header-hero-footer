@@ -1,7 +1,7 @@
-    import { auth } from "./../../lib/auth";
+    import { auth, withCors } from "../../lib/auth";
     import { NextResponse } from "next/server";
 
-    export async function GET(req: Request) {
+    async function handler(req: Request) {
     const session = await auth.api.getSession({
         headers: req.headers,
     });
@@ -16,3 +16,4 @@
         email: session.user.email,
     });
     }
+    export const GET = withCors(handler);

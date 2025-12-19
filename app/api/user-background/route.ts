@@ -1,8 +1,10 @@
-import { pool } from "./../../lib/db";
-import { auth } from "./../../lib/auth";
+import { pool } from "../../lib/db";
+import { auth, withCors } from "../../lib/auth";
 
-    export async function POST(req: Request) {
-    const session = await auth.api.getSession({ headers: req.headers });
+    async function handler(req: Request) {
+    const session = await auth.api.getSession({
+        headers: req.headers,
+    });
 
     if (!session?.user?.id) {
         return new Response("Unauthorized", { status: 401 });
@@ -23,3 +25,5 @@ import { auth } from "./../../lib/auth";
 
     return Response.json({ ok: true });
     }
+
+    export const POST = withCors(handler);

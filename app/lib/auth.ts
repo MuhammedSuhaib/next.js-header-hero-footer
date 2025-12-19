@@ -2,54 +2,46 @@ import { betterAuth } from "better-auth";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
-    secret: process.env.BETTER_AUTH_SECRET!,
-    emailAndPassword: { enabled: true },
-    database: new Pool({
-        connectionString: process.env.DATABASE_URL,
-    }),
-    cookies: {
-        sameSite: "none",
-        secure: true,
-        domain: ".yourdomain.com",
-    },
+  secret: process.env.BETTER_AUTH_SECRET!,
+  emailAndPassword: { enabled: true },
+  database: new Pool({
+    connectionString: process.env.DATABASE_URL,
+  }),
+  cookies: {
+    sameSite: "none",
+    secure: true,
+    domain: "localhost", // dev only
+  },
 });
 
-// 👇 ADD ONLY THIS
-    const handler = auth.handler;
-
-    export const withCors = async (req: Request) => {
+export const withCors =
+  (fn: (req: Request) => Promise<Response>) =>
+  async (req: Request): Promise<Response> => {
     const origin = req.headers.get("origin");
 
     if (req.method === "OPTIONS") {
-        return new Response(null, {
-            headers: {
-                "Access-Control-Allow-Origin": origin ?? "",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization",
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                "Access-Control-Allow-Credentials": "true",
-            },
-        });
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": origin ?? "",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
     }
 
-    const res = await handler(req);
+    const res = await fn(req);
 
     if (
-        origin === "https://muhammedsuhaib.github.io" ||
-        origin === "http://localhost:3000"
+      origin === "http://localhost:3000" ||
+      origin === "https://muhammedsuhaib.github.io"
     ) {
-        res.headers.set("Access-Control-Allow-Origin", origin);
+      res.headers.set("Access-Control-Allow-Origin", origin);
     }
-    res.headers.set(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization"
-    );
-    res.headers.set(
-        "Access-Control-Allow-Methods",
-        "GET, POST, OPTIONS"
-    );
-    res.headers.set(
-    "Access-Control-Allow-Credentials",
-    "true"
-    );
+
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.headers.set("Access-Control-Allow-Credentials", "true");
+
     return res;
-    };
+  };
