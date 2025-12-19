@@ -12,12 +12,35 @@ export const auth = betterAuth({
 // 👇 ADD ONLY THIS
     const handler = auth.handler;
 
+    const ALLOWED_ORIGINS = [
+        "https://muhammedsuhaib.github.io",
+        "http://localhost:3000",
+    ];
+
     export const withCors = async (req: Request) => {
+    const origin = req.headers.get("origin");
+
+    // preflight
+    if (req.method === "OPTIONS") {
+        return new Response(null, {
+            status: 204,
+            headers: {
+                "Access-Control-Allow-Origin": origin ?? "",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Access-Control-Allow-Credentials": "true",
+            },
+        });
+    }
+
     const res = await handler(req);
-    res.headers.set(
-        "Access-Control-Allow-Origin",
-        "https://muhammedsuhaib.github.io"
-    );
+
+    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+        res.headers.set(
+            "Access-Control-Allow-Origin",
+            origin
+        );
+    }
     res.headers.set(
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization"
